@@ -1,0 +1,19 @@
+-- ─── Create Database ───
+CREATE DATABASE IF NOT EXISTS moodlit_db;
+USE moodlit_db;
+
+-- ─── Users Table ───
+CREATE TABLE users (
+    id BINARY(16) NOT NULL PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NULL,
+    apple_user_id VARCHAR(255) NULL UNIQUE,
+    auth_provider ENUM('EMAIL', 'APPLE') NOT NULL DEFAULT 'EMAIL',
+    reset_code VARCHAR(6) NULL,
+    reset_code_expiry DATETIME NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    INDEX idx_email (email),
+    INDEX idx_apple_user_id (apple_user_id)
+);
